@@ -4,8 +4,8 @@ import { Slider, SliderMark, styled } from '@mui/material';
 // import { SliderMark } from '@mui/material';
 
 
-const plausibilityFormat = (num) => {
-    return "P = " + (num * 100).toFixed(2) + "%";
+const relevanceFormat = (num) => {
+    return "Relevance = " + num;
 }
 
 //TODO: Modify this section to make it a callable higher order function by user
@@ -24,6 +24,8 @@ const sigmoidClosure = (beta, midValue) => {
 
 const beta = 0.0005;
 const midValue = 5000;
+
+export const ordinalScale = (value) => value;
 
 export const logitScale = (value) => {
     // Scale the value according to some slider bar changes
@@ -151,27 +153,19 @@ const MySlider = styled(Slider)(({ theme }) => ({
 const markers = [
   {
     value: 0,
-    label: <div className={"BottomLabel"}>Impossible</div>,
+    label: <div className={"BottomLabel"}>Irrelevant</div>,
   },
   {
-    value: parseInt(reverseLogit(0.1)),
-    label: <div className={"TopLabel"}>Unlikely</div>,
+    value: 1,
+    label: <div className={"TopLabel"}>Somewhat Relevant</div>,
   },
   {
-    value: parseInt(reverseLogit(0.25)),
-    label: <div className={"BottomLabel"}>Somewhat Unlikely</div>,
+    value: 2,
+    label: <div className={"BottomLabel"}>Relevant</div>,
   },
   {
-    value: parseInt(reverseLogit(0.75)),
-    label: <div className={"TopLabel"}>Somewhat Likely</div>,
-  },
-  {
-    value: parseInt(reverseLogit(0.9)),
-    label: <div className={"BottomLabel"}>Likely</div>,
-  },
-  {
-    value: 10000,
-    label: <div className={"TopLabel"}>Certain</div>,
+    value: 3,
+    label: <div className={"TopLabel"}>Highly Relevant</div>,
   },
 ];
 
@@ -181,15 +175,15 @@ export function LabeledSlider({
   setter,
   value,
   valueLabelDisplay = "on",
-  valueLabelFormat = plausibilityFormat,
-  defaultValue = 5000,
+  valueLabelFormat = relevanceFormat,
+  defaultValue = 0,
   disabled = false,
   min = 0,
-  max = 10000,
+  max = 3,
   step = 1,
   marks = markers,
   slots = {markLabel: MarkLabelComponent, mark: MySliderMark},
-  scale = logitScale,
+  scale = ordinalScale,
   sx = {
     width: "70%",
     '& .MuiSlider-markLabel': {

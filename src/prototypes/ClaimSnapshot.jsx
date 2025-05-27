@@ -10,7 +10,7 @@ function ClaimSnapshot(props) {
         theme,
         claim,
         index,
-        setSubclaimIndex,
+        setPaperIndex,
         isCurrent,
         parentRef,
     } = props;
@@ -56,7 +56,7 @@ function ClaimSnapshot(props) {
     }
 
     const handleClick = () => {
-        setSubclaimIndex(index);
+        setPaperIndex(index);
     }
 
     return (

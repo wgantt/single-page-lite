@@ -7,8 +7,8 @@ function ClaimSnapshotList(props) {
     const {
         theme,
         payload,
-        subclaimIndex,
-        setSubclaimIndex,
+        paperIndex,
+        setPaperIndex,
     } = props;
 
     const parentRef = useRef(null);
@@ -20,15 +20,15 @@ function ClaimSnapshotList(props) {
             overflow: "auto",
         }} ref={parentRef}>
             <Stack spacing={2}>
-                {payload['sentence-subclaims'].map((subclaim, index) => {
+                {payload['paper-titles'].map((subclaim, index) => {
                     return (
                         <Box key={"claim-snapshot" + index}>
                             <ClaimSnapshot
                                 parentRef={parentRef}
                                 theme={theme}
                                 claim={subclaim}
-                                isCurrent={index === subclaimIndex}
-                                setSubclaimIndex={setSubclaimIndex}
+                                isCurrent={index === paperIndex}
+                                setPaperIndex={setPaperIndex}
                                 index={index}
                             />
                         </Box>

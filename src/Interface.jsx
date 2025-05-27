@@ -21,19 +21,19 @@ function Interface(props) {
 
     const [sourceNotMakeSense, setSourceNotMakeSense] = useState(false);
     const [sentSelectIndices, setSentSelectIndices] = useState(
-        new Array(payload['sentence-subclaims'].length).fill(null).map(
+        new Array(payload['paper-titles'].length).fill(null).map(
             () => new Array(payload['source-text'].length).fill(false)
         )
     );
     const [wrongDecontextualized, setWrongDecontextualized] = useState(
-        new Array(payload['sentence-subclaims'].length).fill(false)
+        new Array(payload['paper-titles'].length).fill(false)
     );
     // const [highlightThreshold, setHighlightThreshold] = useState(0.5);
     const [notsure, setNotsure] = useState(
-        new Array(payload['sentence-subclaims'].length).fill(false)
+        new Array(payload['paper-titles'].length).fill(false)
     );
     const [evidentialSupport, setEvidentialSupport] = useState(
-        new Array(payload['sentence-subclaims'].length).fill(5000)
+        new Array(payload['paper-titles'].length).fill(0)
     );
     const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -47,18 +47,18 @@ function Interface(props) {
 
     useEffect(() => {
         setSentSelectIndices(
-            new Array(payload['sentence-subclaims'].length).fill(null).map(
+            new Array(payload['paper-titles'].length).fill(null).map(
                 () => new Array(payload['source-text'].length).fill(false)
             )
         );
         setWrongDecontextualized(
-            new Array(payload['sentence-subclaims'].length).fill(false)
+            new Array(payload['paper-titles'].length).fill(false)
         );
     }, [payload]);
 
     return (
-        <Grid container spacing={2}>
-            <Grid item xs={4}>
+        <Grid container spacing={1}>
+            {/* <Grid item xs={4}>
                 <SentenceSelection
                     sentSelectIndices={sentSelectIndices[currentIndex]}
                     setSentSelectIndices={setIndexFactory(setSentSelectIndices, sentSelectIndices, currentIndex)}
@@ -72,8 +72,17 @@ function Interface(props) {
                 <input type="hidden" name="wrongDecontextualized" value={wrongDecontextualized} />
                 <input type='hidden' name='notsure' value={notsure} />
                 <input type='hidden' name='evidentialSupport' value={evidentialSupport} />
+            </Grid> */}
+            <Grid item xs={2}>
+                <ClaimSnapshotList
+                    theme={theme}
+                    payload={payload}
+                    paperIndex={currentIndex}
+                    setPaperIndex={setCurrentIndex}
+                >
+                </ClaimSnapshotList>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={10}>
 
                 <Box sx={{
                     display: "flex",
@@ -96,8 +105,8 @@ function Interface(props) {
                             setWrongDecontextualized={setIndexFactory(setWrongDecontextualized, wrongDecontextualized, currentIndex)}
                             notsure={notsure[currentIndex]}
                             setNotsure={setIndexFactory(setNotsure, notsure, currentIndex)}
-                            subclaimIndex={currentIndex}
-                            setSubclaimIndex={setCurrentIndex}
+                            paperIndex={currentIndex}
+                            setPaperIndex={setCurrentIndex}
                         />
                         <Box sx={{
                             width: "100%",
@@ -131,9 +140,9 @@ function Interface(props) {
                                 order: 3
                             }}>
                                 <Button variant="contained" color="primary" disabled={
-                                    currentIndex == payload['sentence-subclaims'].length - 1
+                                    currentIndex == payload['paper-titles'].length - 1
                                 } onClick={() => {
-                                    if (currentIndex < payload['sentence-subclaims'].length - 1) {
+                                    if (currentIndex < payload['paper-titles'].length - 1) {
                                         setCurrentIndex(currentIndex + 1);
                                     }
                                 }}>
@@ -152,16 +161,7 @@ function Interface(props) {
                     </Box>
                 </Box>
             </Grid>
-            <Grid item xs={2}>
-                <ClaimSnapshotList
-                    theme={theme}
-                    payload={payload}
-                    subclaimIndex={currentIndex}
-                    setSubclaimIndex={setCurrentIndex}
-                >
-                </ClaimSnapshotList>
-            </Grid>
-        </Grid>
+       </Grid>
     );
 
 }

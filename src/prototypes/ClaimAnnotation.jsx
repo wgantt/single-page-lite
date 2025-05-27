@@ -17,8 +17,8 @@ function ClaimAnnotation(props) {
         setSourceNotMakeSense,
         wrongDecontextualized,
         setWrongDecontextualized,
-        subclaimIndex,
-        setSubclaimIndex,
+        paperIndex,
+        setPaperIndex,
         notsure,
         setNotsure,
     } = props;
@@ -40,7 +40,7 @@ function ClaimAnnotation(props) {
     }));
 
     const evFormat = (num) => {
-        return "E = " + (2 * num - 1.).toFixed(2);
+        return "R = " + num;
     }
 
     const evidential_markers = [
@@ -60,6 +60,43 @@ function ClaimAnnotation(props) {
 
     return (
         <Box>
+            <EmphCard sx={{
+                margin: "20px"
+            }}>
+                <Box>
+                    <Box>
+                        <Typography variant='prompt' component="span">
+                            <i>How relevant is the paper to assessing the feasibility of the claim?</i>
+                        </Typography>
+                    </Box>
+                    <Box>
+                        <Typography variant='highlightPrompt'>
+                            Claim:&nbsp;
+                        </Typography>
+                        <Typography variant='prompt' component="span">
+                            {payload["claim"]}
+                        </Typography>
+                    </Box>
+                    <Box sx={{
+                        textAlign: "center",
+                        alignItems: "center"
+                    }}>
+                        <LabeledSlider
+                            setter={setEvidentialSupport}
+                            value={evidentialSupport}
+                            valueLabelFormat={evFormat}
+                            scale={(v) => v}
+                            marks={evidential_markers}
+                            sx={{
+                                width: "80%",
+                                '& .MuiSlider-markLabel': {
+                                fontSize: "15px",
+                                },
+                            }}
+                        />
+                    </Box>
+                </Box>
+            </EmphCard>
             <NormalCard sx={{
                 margin: "20px"
             }}>
@@ -68,7 +105,7 @@ function ClaimAnnotation(props) {
                     justifyContent: "space-between",
                     flexWrap: "wrap",
                 }}>
-                    <Box sx={{
+                    {/* <Box sx={{
                         order: 1
                     }}>
                         <FormControlLabel label={<Chip label="D" />}
@@ -81,7 +118,7 @@ function ClaimAnnotation(props) {
                                 />
                             }
                         />
-                    </Box>
+                    </Box> */}
                     <Box sx={{
                         order: 2
                     }}>
@@ -102,7 +139,7 @@ function ClaimAnnotation(props) {
                         />
                     </Box>
                 </Box>
-                <Box sx={{
+                {/* <Box sx={{
                 }}>
                     <FormControlLabel label={"Bad Source"}
                         control={
@@ -126,7 +163,7 @@ function ClaimAnnotation(props) {
                         }
                     />
 
-                </Box>
+                </Box> */}
                 <animated.div style={{
                     backgroundColor: theme.palette['card-bg-emph'].main,
                     borderRadius: "10px",
@@ -136,40 +173,14 @@ function ClaimAnnotation(props) {
                     ...displayMetaSpring
                 }}>
                     <Stack direction="column" spacing={1}>
-                        <Box>
-                            <Typography variant='highlightPrompt' component='span'>
-                                Report Title:&nbsp;
-                            </Typography>
-                            <Typography variant='prompt' component='span'>
-                                {payload["report-title"]}
-                            </Typography>
-                        </Box>
-                        <Box>
-                            {payload["intro-text"].map((sentence, sindex) => {
-                                return (
-                                    <Typography variant='prompt' key={"sentence-" + sindex} component="span">
-                                        {sindex == 0 && <Typography variant='highlightPrompt' component="span">Abstract:&nbsp;</Typography>}
-                                        {sentence}
-                                    </Typography>
-                                );
-                            })}
-                        </Box>
-                        <Box>
+                       <Box>
                             <Typography variant='highlightPrompt' component="span">
-                                {payload["section-title"]}:&nbsp;
+                                Introduction:&nbsp;
                             </Typography>
-                            {payload['paragraph-text'].map((sentence, sindex) => {
-                                return (
-                                    sindex != payload['sentence-idx'] ?
-                                    <Typography variant='prompt' key={"sentence-" + sindex} component="span">
-                                        {sentence}
-                                    </Typography> :
-                                    <Typography variant='highlightPrompt' key={"sentence-" + sindex} component="span">
-                                        <u>{sentence}</u>
-                                    </Typography>
-                                );
-                            })}
-                        </Box>
+                            <Typography variant='prompt' component="span">
+                                {payload["paper-intro-texts"][paperIndex]}
+                            </Typography>
+                       </Box>
                     </Stack>
                 </animated.div>
                 <Divider sx={{
@@ -179,56 +190,29 @@ function ClaimAnnotation(props) {
                 <Box sx={{
                 }}>
                     <Typography variant='highlightPrompt' component="span">
-                        Claim:
-                        {/* {decontextualized ? "Decontextualized: " : "Claim: "} */}
+                        Title:
                     </Typography>
                     <Typography variant='prompt' component="span">
-                        {/* {decontextualized ?
-                            payload['sentence-subclaims-decontextualized'][subclaimIndex] :
-                            payload['sentence-subclaims'][subclaimIndex]
-                        } */}
-                        <Contrasting 
-                            original={payload['sentence-subclaims'][subclaimIndex]}
-                            edited={decontextualized ?
-                                payload['sentence-subclaims-decontextualized'][subclaimIndex] :
-                                payload['sentence-subclaims'][subclaimIndex]
-                            }
-                        />
+                        {' ' + payload['paper-titles'][paperIndex]}
                     </Typography>
+                        <Box>
+                            <Typography variant='highlightPrompt' component='span'>
+                                Link:&nbsp;
+                            </Typography>
+                            <Typography variant='prompt' component='span'>
+                                {payload["paper-links"][paperIndex]}
+                            </Typography>
+                        </Box>
+                        <Box>
+                            <Typography variant='highlightPrompt' component='span'>
+                                Abstract:&nbsp;
+                            </Typography>
+                            <Typography variant='prompt' component="span">
+                                {payload["paper-abstracts"][paperIndex]}
+                            </Typography>
+                        </Box>
                 </Box>
             </NormalCard>
-            <EmphCard sx={{
-                margin: "20px"
-            }}>
-                <Box>
-                    <Box>
-                        <Typography variant='highlightPrompt'>
-                            Evidential Support:&nbsp;
-                        </Typography>
-                        <Typography variant='prompt' component="span">
-                            To what extent does the selected text in the source support or refute the decontextualized claim?
-                        </Typography>
-                    </Box>
-                    <Box sx={{
-                        textAlign: "center",
-                        alignItems: "center"
-                    }}>
-                        <LabeledSlider
-                            setter={setEvidentialSupport}
-                            value={evidentialSupport}
-                            valueLabelFormat={evFormat}
-                            scale={(v) => v / 10000}
-                            marks={evidential_markers}
-                            sx={{
-                                width: "80%",
-                                '& .MuiSlider-markLabel': {
-                                fontSize: "15px",
-                                },
-                            }}
-                        />
-                    </Box>
-                </Box>
-            </EmphCard>
         </Box>
     );
 }
