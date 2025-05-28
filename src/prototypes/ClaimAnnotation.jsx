@@ -11,8 +11,8 @@ function ClaimAnnotation(props) {
     const {
         theme,
         payload,
-        evidentialSupport,
-        setEvidentialSupport,
+        relevance,
+        setRelevance,
         sourceNotMakeSense,
         setSourceNotMakeSense,
         wrongDecontextualized,
@@ -82,8 +82,8 @@ function ClaimAnnotation(props) {
                         alignItems: "center"
                     }}>
                         <LabeledSlider
-                            setter={setEvidentialSupport}
-                            value={evidentialSupport}
+                            setter={setRelevance}
+                            value={relevance}
                             valueLabelFormat={evFormat}
                             scale={(v) => v}
                             marks={evidential_markers}
@@ -164,7 +164,36 @@ function ClaimAnnotation(props) {
                     />
 
                 </Box> */}
-                <animated.div style={{
+              <Box sx={{
+                }}>
+                    <Typography variant='highlightPrompt' component="span">
+                        Title:&nbsp;
+                    </Typography>
+                    <Typography variant='prompt' component="span">
+                        <a href={payload['paper-links'][paperIndex]} target="_blank">{payload['paper-titles'][paperIndex]}</a>
+                    </Typography>
+                        {/* <Box>
+                            <Typography variant='highlightPrompt' component='span'>
+                                Link:&nbsp;
+                            </Typography>
+                            <Typography variant='prompt' component='span'>
+                                {payload["paper-links"][paperIndex]}
+                            </Typography>
+                        </Box> */}
+                        <Box>
+                            <Typography variant='highlightPrompt' component='span'>
+                                Abstract:&nbsp;
+                            </Typography>
+                            <Typography variant='prompt' component="span">
+                                {payload["paper-abstracts"][paperIndex]}
+                            </Typography>
+                        </Box>
+                </Box>
+                <Divider sx={{
+                    margin: "10px",
+                    display: metadataDisplay ? "block" : "none",
+                }}/>
+                 <animated.div style={{
                     backgroundColor: theme.palette['card-bg-emph'].main,
                     borderRadius: "10px",
                     paddingLeft: "20px",
@@ -183,35 +212,7 @@ function ClaimAnnotation(props) {
                        </Box>
                     </Stack>
                 </animated.div>
-                <Divider sx={{
-                    margin: "10px",
-                    display: metadataDisplay ? "block" : "none",
-                }}/>
-                <Box sx={{
-                }}>
-                    <Typography variant='highlightPrompt' component="span">
-                        Title:
-                    </Typography>
-                    <Typography variant='prompt' component="span">
-                        {' ' + payload['paper-titles'][paperIndex]}
-                    </Typography>
-                        <Box>
-                            <Typography variant='highlightPrompt' component='span'>
-                                Link:&nbsp;
-                            </Typography>
-                            <Typography variant='prompt' component='span'>
-                                {payload["paper-links"][paperIndex]}
-                            </Typography>
-                        </Box>
-                        <Box>
-                            <Typography variant='highlightPrompt' component='span'>
-                                Abstract:&nbsp;
-                            </Typography>
-                            <Typography variant='prompt' component="span">
-                                {payload["paper-abstracts"][paperIndex]}
-                            </Typography>
-                        </Box>
-                </Box>
+ 
             </NormalCard>
         </Box>
     );

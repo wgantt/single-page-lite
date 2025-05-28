@@ -7,7 +7,7 @@ import { useState, useEffect } from 'react';
 import { Button, Box, CssBaseline, Divider, Typography } from '@mui/material';
 import { AppBar, Grid, Toolbar } from '@mui/material';
 import { NormalCard } from './components/Card';
-import SentenceSelection from './prototypes/SentenceSelection';
+// import SentenceSelection from './prototypes/SentenceSelection';
 import ClaimAnnotation from './prototypes/ClaimAnnotation';
 import ClaimSnapshotList from './prototypes/ClaimSnapshotList';
 
@@ -20,11 +20,11 @@ function Interface(props) {
     } = props;
 
     const [sourceNotMakeSense, setSourceNotMakeSense] = useState(false);
-    const [sentSelectIndices, setSentSelectIndices] = useState(
-        new Array(payload['paper-titles'].length).fill(null).map(
-            () => new Array(payload['source-text'].length).fill(false)
-        )
-    );
+    // const [sentSelectIndices, setSentSelectIndices] = useState(
+    //     new Array(payload['paper-titles'].length).fill(null).map(
+    //         () => new Array(payload['source-text'].length).fill(false)
+    //     )
+    // );
     const [wrongDecontextualized, setWrongDecontextualized] = useState(
         new Array(payload['paper-titles'].length).fill(false)
     );
@@ -32,7 +32,7 @@ function Interface(props) {
     const [notsure, setNotsure] = useState(
         new Array(payload['paper-titles'].length).fill(false)
     );
-    const [evidentialSupport, setEvidentialSupport] = useState(
+    const [relevance, setRelevance] = useState(
         new Array(payload['paper-titles'].length).fill(0)
     );
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -45,16 +45,16 @@ function Interface(props) {
         }
     };
 
-    useEffect(() => {
-        setSentSelectIndices(
-            new Array(payload['paper-titles'].length).fill(null).map(
-                () => new Array(payload['source-text'].length).fill(false)
-            )
-        );
-        setWrongDecontextualized(
-            new Array(payload['paper-titles'].length).fill(false)
-        );
-    }, [payload]);
+    // useEffect(() => {
+    //     setSentSelectIndices(
+    //         new Array(payload['paper-titles'].length).fill(null).map(
+    //             () => new Array(payload['source-text'].length).fill(false)
+    //         )
+    //     );
+    //     setWrongDecontextualized(
+    //         new Array(payload['paper-titles'].length).fill(false)
+    //     );
+    // }, [payload]);
 
     return (
         <Grid container spacing={1}>
@@ -71,7 +71,6 @@ function Interface(props) {
                 <input type="hidden" name="sourceNotMakeSense" value={sourceNotMakeSense} />
                 <input type="hidden" name="wrongDecontextualized" value={wrongDecontextualized} />
                 <input type='hidden' name='notsure' value={notsure} />
-                <input type='hidden' name='evidentialSupport' value={evidentialSupport} />
             </Grid> */}
             <Grid item xs={2}>
                 <ClaimSnapshotList
@@ -83,7 +82,7 @@ function Interface(props) {
                 </ClaimSnapshotList>
             </Grid>
             <Grid item xs={10}>
-
+                <input type='hidden' name='relevance' value={relevance} />
                 <Box sx={{
                     display: "flex",
                     flexDirection: "row",
@@ -97,8 +96,8 @@ function Interface(props) {
                         <ClaimAnnotation 
                             theme={theme}
                             payload={payload}
-                            evidentialSupport={evidentialSupport[currentIndex]}
-                            setEvidentialSupport={setIndexFactory(setEvidentialSupport, evidentialSupport, currentIndex)}
+                            relevance={relevance[currentIndex]}
+                            setRelevance={setIndexFactory(setRelevance, relevance, currentIndex)}
                             sourceNotMakeSense={sourceNotMakeSense}
                             setSourceNotMakeSense={setSourceNotMakeSense}
                             wrongDecontextualized={wrongDecontextualized[currentIndex]}
