@@ -58,7 +58,7 @@ const lightTheme = createTheme({
 
 const App = () => {
     const theme = lightTheme;
-    // const payload = {
+    // const payloads = {
     //     "claim-id": "unique-claim-id",
     //     "claim": "A bold scientific claim!",
     //     "paper-titles": ["First Paper", "Second Paper", "Third Paper"],

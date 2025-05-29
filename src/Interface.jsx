@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 // import CssBaseline from '@mui/material/CssBaseline';
 // import Divider from '@mui/material/Divider';
 // import Typography from '@mui/material/Typography';
-import { Button, Box, CssBaseline, Divider, Typography } from '@mui/material';
+import { Button, Box, CssBaseline, Divider, TextField, Typography } from '@mui/material';
 import { AppBar, Grid, Toolbar } from '@mui/material';
 import { NormalCard } from './components/Card';
 // import SentenceSelection from './prototypes/SentenceSelection';
@@ -81,7 +81,7 @@ function Interface(props) {
                 >
                 </ClaimSnapshotList>
             </Grid>
-            <Grid item xs={10}>
+            <Grid item xs={8}>
                 <input type='hidden' name='relevance' value={relevance} />
                 <Box sx={{
                     display: "flex",
@@ -160,6 +160,9 @@ function Interface(props) {
                     </Box>
                 </Box>
             </Grid>
+            <Grid item xs={2}>
+                <TextField id="missing-info" name="missing info" variant="outlined" helperText="Use a bulletted ('-') list to describe any info essential for assessing the claim that is missing from the papers" placeholder="- item 1&#13;&#10;- item 2&#13;&#10;- ..." fullWidth multiline minRows={3}/>
+           </Grid>
        </Grid>
     );
 
