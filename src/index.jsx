@@ -76,14 +76,14 @@ const App = () => {
 
     useEffect(() => {
       setPayloads(
-        [JSON.parse(document.getElementById("payload-read").textContent)]
+        JSON.parse(document.getElementById("payload-read").textContent)
       );
     }, []); 
 
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
-            {payloads && <Interface payload={payloads[0]} theme={theme} />}
+            {payloads && <Interface payload={payloads} theme={theme} />}
         </ThemeProvider>
     );
 };
