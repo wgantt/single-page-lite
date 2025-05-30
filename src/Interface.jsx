@@ -4,12 +4,13 @@ import { useState, useEffect } from 'react';
 // import CssBaseline from '@mui/material/CssBaseline';
 // import Divider from '@mui/material/Divider';
 // import Typography from '@mui/material/Typography';
-import { Button, Box, CssBaseline, Divider, TextField, Typography } from '@mui/material';
+import { Button, Box, Checkbox, CssBaseline, Divider, FormControlLabel, TextField, Typography } from '@mui/material';
 import { AppBar, Grid, Toolbar } from '@mui/material';
-import { NormalCard } from './components/Card';
+import { EmphCard } from './components/Card';
 // import SentenceSelection from './prototypes/SentenceSelection';
 import ClaimAnnotation from './prototypes/ClaimAnnotation';
 import ClaimSnapshotList from './prototypes/ClaimSnapshotList';
+import { LabeledSlider } from './components/Slider';
 
 
 function Interface(props) {
@@ -20,11 +21,7 @@ function Interface(props) {
     } = props;
 
     const [cantAssessClaim, setcantAssessClaim] = useState(false);
-    // const [sentSelectIndices, setSentSelectIndices] = useState(
-    //     new Array(payload['paper-titles'].length).fill(null).map(
-    //         () => new Array(payload['source-text'].length).fill(false)
-    //     )
-    // );
+
     const [wrongDecontextualized, setWrongDecontextualized] = useState(
         new Array(payload['paper-titles'].length).fill(false)
     );
@@ -35,6 +32,8 @@ function Interface(props) {
     const [relevance, setRelevance] = useState(
         new Array(payload['paper-titles'].length).fill(0)
     );
+
+    const [feasibility, setFeasibility] = useState(0);
     const [currentIndex, setCurrentIndex] = useState(0);
 
     const setIndexFactory = (setter, old_value, index) => {
@@ -45,33 +44,34 @@ function Interface(props) {
         }
     };
 
-    // useEffect(() => {
-    //     setSentSelectIndices(
-    //         new Array(payload['paper-titles'].length).fill(null).map(
-    //             () => new Array(payload['source-text'].length).fill(false)
-    //         )
-    //     );
-    //     setWrongDecontextualized(
-    //         new Array(payload['paper-titles'].length).fill(false)
-    //     );
-    // }, [payload]);
+    const feasibilityFormat = (num) => {
+        return "F = " + num;
+    }
 
+    const feasibilityMarkers = [
+        {
+          value: -2,
+          label: <div className={"BottomLabel"}>Completely Infeasible</div>,
+        },
+        {
+          value: -1,
+          label: <div className={"TopLabel"}>Somewhat Infeasible</div>,
+        },
+        {
+          value: 0,
+          label: <div className={"BottomLabel"}>No Evidence</div>,
+        },
+        {
+          value: 1,
+          label: <div className={"TopLabel"}>Somewhat Feasible</div>,
+        },
+        {
+          value: 2,
+          label: <div className={"BottomLabel"}>Completely Feasible</div>
+        }
+      ];
     return (
         <Grid container spacing={1}>
-            {/* <Grid item xs={4}>
-                <SentenceSelection
-                    sentSelectIndices={sentSelectIndices[currentIndex]}
-                    setSentSelectIndices={setIndexFactory(setSentSelectIndices, sentSelectIndices, currentIndex)}
-                    // highlighting={payload['highlighted-weights']}
-                    // threshold={highlightThreshold}
-                    payload={payload}
-                    theme={theme}
-                />
-                <input type="hidden" name="sentSelectIndices" value={JSON.stringify(sentSelectIndices)} />
-                <input type="hidden" name="cantAssessClaim" value={cantAssessClaim} />
-                <input type="hidden" name="wrongDecontextualized" value={wrongDecontextualized} />
-                <input type='hidden' name='notsure' value={notsure} />
-            </Grid> */}
             <Grid item xs={2}>
                 <ClaimSnapshotList
                     theme={theme}
@@ -81,9 +81,10 @@ function Interface(props) {
                 >
                 </ClaimSnapshotList>
             </Grid>
-            <Grid item xs={8}>
+            <Grid item xs={6}>
                 <input type='hidden' name='relevance' value={relevance} />
                 <input type='hidden' name='cantAssessClaim' value={cantAssessClaim} />
+                <input type='hidden' name='feasibility' value={feasibility} />
                 <Box sx={{
                     display: "flex",
                     flexDirection: "row",
@@ -99,8 +100,8 @@ function Interface(props) {
                             payload={payload}
                             relevance={relevance[currentIndex]}
                             setRelevance={setIndexFactory(setRelevance, relevance, currentIndex)}
-                            cantAssessClaim={cantAssessClaim}
-                            setcantAssessClaim={setcantAssessClaim}
+                            feasibility={feasibility}
+                            setFeasibility={setFeasibility}
                             wrongDecontextualized={wrongDecontextualized[currentIndex]}
                             setWrongDecontextualized={setIndexFactory(setWrongDecontextualized, wrongDecontextualized, currentIndex)}
                             notsure={notsure[currentIndex]}
@@ -161,7 +162,48 @@ function Interface(props) {
                     </Box>
                 </Box>
             </Grid>
-            <Grid item xs={2}>
+            <Grid item xs={4}>
+                <EmphCard sx={{
+                    margin: "10px"
+                }}>
+                    <Box>
+                        <Box>
+                            <Typography variant='prompt' component="span">
+                                How <b>feasible</b> does the claim seem to you?
+                            </Typography>
+                        </Box>
+                        <Box sx={{
+                            textAlign: "center",
+                            alignItems: "center"
+                        }}>
+                            <LabeledSlider
+                                setter={setFeasibility}
+                                value={feasibility}
+                                valueLabelFormat={feasibilityFormat}
+                                min={-2}
+                                max={2}
+                                marks={feasibilityMarkers}
+                                scale={(v) => v}
+                                sx={{
+                                    width: "80%",
+                                    '& .MuiSlider-markLabel': {
+                                    fontSize: "15px",
+                                    },
+                                }}
+                            />
+                        </Box>
+                        <Box sx={{
+                        }}>
+                            <FormControlLabel label="I can't assess this claim"
+                                control={
+                                    <Checkbox checked={cantAssessClaim}
+                                        onChange={(e) => setcantAssessClaim(e.target.checked)}
+                                        />
+                                }
+                            />
+                        </Box>
+                    </Box>
+                </EmphCard>
                 <TextField id="missing-info" name="missingInfo" variant="outlined" helperText="Use a bulletted ('-') list to describe any info essential for assessing the claim that is missing from the papers" placeholder="- item 1&#13;&#10;- item 2&#13;&#10;- ..." fullWidth multiline minRows={3}/>
            </Grid>
        </Grid>

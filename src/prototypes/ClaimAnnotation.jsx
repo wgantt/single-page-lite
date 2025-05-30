@@ -13,8 +13,6 @@ function ClaimAnnotation(props) {
         payload,
         relevance,
         setRelevance,
-        cantAssessClaim,
-        setcantAssessClaim,
         wrongDecontextualized,
         setWrongDecontextualized,
         paperIndex,
@@ -27,7 +25,6 @@ function ClaimAnnotation(props) {
     // data format we'll do snippet selection for each
     // of the claim
 
-    const [decontextualized, setDecontextualized] = useState(false);
     const [metadataDisplay, setMetadataDisplay] = useState(false);
 
     const [displayMetaSpring, apiDisplayMeta] = useSpring(() => ({
@@ -39,42 +36,33 @@ function ClaimAnnotation(props) {
         },
     }));
 
-    const evFormat = (num) => {
+    const relFormat = (num) => {
         return "R = " + num;
     }
 
-    const evidential_markers = [
-        {
-            value: 0,
-            label: <div className={"TopLabel"}>Fully Refuted</div>,
-        },
-        {
-            value: 5000,
-            label: <div className={"BottomLabel"}>Neither</div>,
-        },
-        {
-            value: 10000,
-            label: <div className={"TopLabel"}>Fully Supported</div>,
-        },
-    ];
 
     return (
         <Box>
-            <EmphCard sx={{
+            <NormalCard sx={{
                 margin: "20px"
             }}>
                 <Box>
-                    <Box>
-                        <Typography variant='prompt' component="span">
-                            <i>How relevant is the paper to assessing the feasibility of the claim?</i>
-                        </Typography>
-                    </Box>
                     <Box>
                         <Typography variant='highlightPrompt'>
                             Claim:&nbsp;
                         </Typography>
                         <Typography variant='prompt' component="span">
                             {payload["claim"]}
+                        </Typography>
+                    </Box>
+               </Box>
+            </NormalCard>
+            <EmphCard sx={{
+                margin: "20px"
+            }}>
+                   <Box>
+                        <Typography variant='prompt' component="span">
+                            How <b>relevant</b> is the paper to assessing the feasibility of the claim?
                         </Typography>
                     </Box>
                     <Box sx={{
@@ -84,7 +72,7 @@ function ClaimAnnotation(props) {
                         <LabeledSlider
                             setter={setRelevance}
                             value={relevance}
-                            valueLabelFormat={evFormat}
+                            valueLabelFormat={relFormat}
                             scale={(v) => v}
                             sx={{
                                 width: "80%",
@@ -94,7 +82,6 @@ function ClaimAnnotation(props) {
                             }}
                         />
                     </Box>
-                </Box>
             </EmphCard>
             <NormalCard sx={{
                 margin: "20px"
@@ -104,20 +91,6 @@ function ClaimAnnotation(props) {
                     justifyContent: "space-between",
                     flexWrap: "wrap",
                 }}>
-                    {/* <Box sx={{
-                        order: 1
-                    }}>
-                        <FormControlLabel label={<Chip label="D" />}
-                            control={
-                                <Switch
-                                    checked={decontextualized}
-                                    onChange={(e) => {
-                                        setDecontextualized(e.target.checked);
-                                    }}
-                                />
-                            }
-                        />
-                    </Box> */}
                     <Box sx={{
                         order: 2
                     }}>
@@ -138,17 +111,7 @@ function ClaimAnnotation(props) {
                         />
                     </Box>
                 </Box>
-                <Box sx={{
-                }}>
-                    <FormControlLabel label={"I can't assess this claim"}
-                        control={
-                            <Checkbox checked={cantAssessClaim}
-                                onChange={(e) => setcantAssessClaim(e.target.checked)}
-                                />
-                        }
-                    />
-                </Box>
-              <Box sx={{
+             <Box sx={{
                 }}>
                     <Typography variant='highlightPrompt' component="span">
                         Title:&nbsp;
@@ -156,14 +119,6 @@ function ClaimAnnotation(props) {
                     <Typography variant='prompt' component="span">
                         <a href={payload['paper-links'][paperIndex]} target="_blank">{payload['paper-titles'][paperIndex]}</a>
                     </Typography>
-                        {/* <Box>
-                            <Typography variant='highlightPrompt' component='span'>
-                                Link:&nbsp;
-                            </Typography>
-                            <Typography variant='prompt' component='span'>
-                                {payload["paper-links"][paperIndex]}
-                            </Typography>
-                        </Box> */}
                         <Box>
                             <Typography variant='highlightPrompt' component='span'>
                                 Abstract:&nbsp;
@@ -196,7 +151,6 @@ function ClaimAnnotation(props) {
                        </Box>
                     </Stack>
                 </animated.div>
- 
             </NormalCard>
         </Box>
     );
