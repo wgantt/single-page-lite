@@ -1,25 +1,23 @@
 import "./Slider.css";
 import { Slider, SliderMark, styled } from '@mui/material';
-// import styled, { slotShouldForwardProp } from '@mui/material/styles/styled';
-// import { SliderMark } from '@mui/material';
 
 
 const relevanceFormat = (num) => {
-    return "Relevance = " + num;
+  return "Relevance = " + num;
 }
 
 //TODO: Modify this section to make it a callable higher order function by user
 const sigmoidClosure = (beta, midValue) => {
-    return function (v) {
-        let normalized = beta * (v - midValue);
+  return function (v) {
+    let normalized = beta * (v - midValue);
 
-        if (normalized === 0)
-            return 0.5;
-        else if (normalized < 0)
-            return Math.exp(normalized) / (1 + Math.exp(normalized));
-        else
-            return 1 / (1 + Math.exp(0 - normalized));
-    };
+    if (normalized === 0)
+      return 0.5;
+    else if (normalized < 0)
+      return Math.exp(normalized) / (1 + Math.exp(normalized));
+    else
+      return 1 / (1 + Math.exp(0 - normalized));
+  };
 }
 
 const beta = 0.0005;
@@ -28,48 +26,48 @@ const midValue = 5000;
 export const ordinalScale = (value) => value;
 
 export const logitScale = (value) => {
-    // Scale the value according to some slider bar changes
+  // Scale the value according to some slider bar changes
 
-    // if the value is min max should directly return
-    if (value === 0) return 0.;
-    else if (value === 10000) return 1.;
+  // if the value is min max should directly return
+  if (value === 0) return 0.;
+  else if (value === 10000) return 1.;
 
-    const sigmoidFunc = sigmoidClosure(
-        beta,
-        midValue
-    );
+  const sigmoidFunc = sigmoidClosure(
+    beta,
+    midValue
+  );
 
-    let transformed = sigmoidFunc(value);
-    let minVal = sigmoidFunc(0);
-    let maxVal = sigmoidFunc(10000);
+  let transformed = sigmoidFunc(value);
+  let minVal = sigmoidFunc(0);
+  let maxVal = sigmoidFunc(10000);
 
-    if (Math.abs(transformed - 0.5) < 1e-8)
-        return 0.5;
-    else if (transformed < 0.5)
-        return 0.5 - (0.5 - transformed) / (1 - 2 * minVal);
-    else
-        return 0.5 + (transformed - 0.5) / (2 * maxVal - 1);
+  if (Math.abs(transformed - 0.5) < 1e-8)
+    return 0.5;
+  else if (transformed < 0.5)
+    return 0.5 - (0.5 - transformed) / (1 - 2 * minVal);
+  else
+    return 0.5 + (transformed - 0.5) / (2 * maxVal - 1);
 };
 
 export const reverseLogit = (pla) => {
-    // Given a plausibility, we want to reverse the logit scale
-    const sigmoidFunc = sigmoidClosure(
-        beta,
-        midValue
-    );
-    let minVal = sigmoidFunc(0);
-    let maxVal = sigmoidFunc(10000);
+  // Given a plausibility, we want to reverse the logit scale
+  const sigmoidFunc = sigmoidClosure(
+    beta,
+    midValue
+  );
+  let minVal = sigmoidFunc(0);
+  let maxVal = sigmoidFunc(10000);
 
-    if (pla === 0.5)
-        return 5000;
-    else if (pla < 0.5) {
-        let unnormalized = 0.5 * (1 - (1 - 2 * pla) * (1 - 2 * minVal));
-        return Math.log(unnormalized / (1 - unnormalized)) / beta + midValue;
-    }
-    else {
-        let unnormalized = 0.5 * (1 + (2 *pla - 1) * (2 * maxVal - 1));
-        return - Math.log((1 - unnormalized) / unnormalized) / beta + midValue;
-    }
+  if (pla === 0.5)
+    return 5000;
+  else if (pla < 0.5) {
+    let unnormalized = 0.5 * (1 - (1 - 2 * pla) * (1 - 2 * minVal));
+    return Math.log(unnormalized / (1 - unnormalized)) / beta + midValue;
+  }
+  else {
+    let unnormalized = 0.5 * (1 + (2 * pla - 1) * (2 * maxVal - 1));
+    return - Math.log((1 - unnormalized) / unnormalized) / beta + midValue;
+  }
 }
 
 
@@ -104,19 +102,19 @@ const SliderMarkLabel = styled('span', {
 
 function MarkLabelComponent(props) {
 
-    const { children, className, ...others } = props;
+  const { children, className, ...others } = props;
 
-    return (
-        <SliderMarkLabel className={className} {...others}>
-            {children}
-        </SliderMarkLabel>
-    )
+  return (
+    <SliderMarkLabel className={className} {...others}>
+      {children}
+    </SliderMarkLabel>
+  )
 }
 
 
 const MySliderMark = styled(SliderMark)(({ theme }) => ({
-    transform: "translate(-1px, -50%) scale(3)",
-    color: theme.palette.primary.main,
+  transform: "translate(-1px, -50%) scale(3)",
+  color: theme.palette.primary.main,
 }));
 
 
@@ -186,7 +184,7 @@ export function LabeledSlider({
   max = 5,
   step = 1,
   marks = markers,
-  slots = {markLabel: MarkLabelComponent, mark: MySliderMark},
+  slots = { markLabel: MarkLabelComponent, mark: MySliderMark },
   scale = ordinalScale,
   sx = {
     width: "70%",
@@ -198,8 +196,8 @@ export function LabeledSlider({
 
   return (
     <>
-    <br />
-    <br />
+      <br />
+      <br />
       <MySlider
         valueLabelDisplay={valueLabelDisplay}
         valueLabelFormat={valueLabelFormat}

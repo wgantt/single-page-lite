@@ -77,11 +77,9 @@ function Contrasting(props) {
     let prevEdited = 0;
 
     for (let i = 0; i < matched.length; i++) {
-        // const [originalIndex, editedIndex] = matched[i];
         const currentGroup = matched[i];
         const originalSlice = tokenizedOriginal.slice(prevOriginal, currentGroup[0][0]).join(" ");
         const editedSlice = tokenizedEdited.slice(prevEdited, currentGroup[0][1]).join(" ");
-        // const matchedSlice = original.slice(currentGroup[0][0], currentGroup[currentGroup.length - 1][0] + 1);
         const matchedSlice = tokenizedOriginal.slice(currentGroup[0][0], currentGroup[currentGroup.length - 1][0] + 1).join(" ");
 
         componentsToDisplay.push(

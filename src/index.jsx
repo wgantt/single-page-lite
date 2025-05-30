@@ -4,13 +4,11 @@ import { CssBaseline } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material';
 import { lightPalette } from './components/theme';
 import Interface from './Interface';
-import { EmphCard } from './components/Card';
-import { useSpring, animated } from '@react-spring/web';
 
 
 const lightTheme = createTheme({
-        ...lightPalette,
-        typography: {
+    ...lightPalette,
+    typography: {
         prevRead: {
             fontWeight: 'normal',
             color: "lightgrey",
@@ -75,10 +73,10 @@ const App = () => {
     const [payloads, setPayloads] = useState(null);
 
     useEffect(() => {
-      setPayloads(
-        JSON.parse(document.getElementById("payload-read").textContent)
-      );
-    }, []); 
+        setPayloads(
+            JSON.parse(document.getElementById("payload-read").textContent)
+        );
+    }, []);
 
     return (
         <ThemeProvider theme={theme}>

@@ -1,6 +1,5 @@
-import { alpha, Typography, Box } from "@mui/material"
-import { useSpring, animated, config } from '@react-spring/web'
-// import { DoneAll } from '@mui/icons-material';
+import { Typography, Box } from "@mui/material"
+import { useSpring, animated } from '@react-spring/web'
 
 
 function SentenceElement(props) {
@@ -9,7 +8,6 @@ function SentenceElement(props) {
         index,
         sentSelect,
         setSentSelect,
-        // highlighting,
         disableFurtherSelection,
         setSnackOpen,
         theme
@@ -54,7 +52,6 @@ function SentenceElement(props) {
             <Box 
                 sx={{
                     padding: "10px",
-                    // backgroundColor: theme.palette["card-bg-emph"].main
                     opacity: sentSelect ? 1.0 : 0.5,
                 }}
             >

@@ -1,14 +1,12 @@
 import { NormalCard } from '../components/Card';
 import SentenceElement from './SentenceElement';
-import { Box, Button, IconButton, Typography, Snackbar } from '@mui/material';
+import { Box, Button, IconButton, Snackbar } from '@mui/material';
 
 function SentenceSelection(props) {
 
     const {
         sentSelectIndices,
         setSentSelectIndices,
-        // highlighting,
-        // threshold,
         payload,
         theme,
     } = props;
@@ -63,7 +61,6 @@ function SentenceSelection(props) {
                         key={"sentence-" + index}
                         setSentSelect={getSetForIndex(index)}
                         sentSelect={sentSelectIndices[index]}
-                        // highlighting={highlighting[index]}
                         disableFurtherSelection={sentSelectIndices.filter((value) => value).length >= 3}
                         setSnackOpen={setSnackOpen}
                         theme={theme}

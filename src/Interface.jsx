@@ -1,13 +1,7 @@
-import { useState, useEffect } from 'react';
-// import Button from '@mui/material/Button';
-// import Box from '@mui/material/Box';
-// import CssBaseline from '@mui/material/CssBaseline';
-// import Divider from '@mui/material/Divider';
-// import Typography from '@mui/material/Typography';
-import { Button, Box, Checkbox, CssBaseline, Divider, FormControlLabel, TextField, Typography } from '@mui/material';
-import { AppBar, Grid, Toolbar } from '@mui/material';
+import { useState } from 'react';
+import { Button, Box, Checkbox, Divider, FormControlLabel, TextField, Typography } from '@mui/material';
+import { Grid, } from '@mui/material';
 import { EmphCard } from './components/Card';
-// import SentenceSelection from './prototypes/SentenceSelection';
 import ClaimAnnotation from './prototypes/ClaimAnnotation';
 import ClaimSnapshotList from './prototypes/ClaimSnapshotList';
 import { LabeledSlider } from './components/Slider';
@@ -22,13 +16,6 @@ function Interface(props) {
 
     const [cantAssessClaim, setcantAssessClaim] = useState(false);
 
-    const [wrongDecontextualized, setWrongDecontextualized] = useState(
-        new Array(payload['paper-titles'].length).fill(false)
-    );
-    // const [highlightThreshold, setHighlightThreshold] = useState(0.5);
-    const [notsure, setNotsure] = useState(
-        new Array(payload['paper-titles'].length).fill(false)
-    );
     const [relevance, setRelevance] = useState(
         new Array(payload['paper-titles'].length).fill(0)
     );
@@ -50,26 +37,26 @@ function Interface(props) {
 
     const feasibilityMarkers = [
         {
-          value: -2,
-          label: <div className={"BottomLabel"}>Completely Infeasible</div>,
+            value: -2,
+            label: <div className={"BottomLabel"}>Completely Infeasible</div>,
         },
         {
-          value: -1,
-          label: <div className={"TopLabel"}>Somewhat Infeasible</div>,
+            value: -1,
+            label: <div className={"TopLabel"}>Somewhat Infeasible</div>,
         },
         {
-          value: 0,
-          label: <div className={"BottomLabel"}>No Evidence</div>,
+            value: 0,
+            label: <div className={"BottomLabel"}>No Evidence</div>,
         },
         {
-          value: 1,
-          label: <div className={"TopLabel"}>Somewhat Feasible</div>,
+            value: 1,
+            label: <div className={"TopLabel"}>Somewhat Feasible</div>,
         },
         {
-          value: 2,
-          label: <div className={"BottomLabel"}>Completely Feasible</div>
+            value: 2,
+            label: <div className={"BottomLabel"}>Completely Feasible</div>
         }
-      ];
+    ];
     return (
         <Grid container spacing={1}>
             <Grid item xs={2}>
@@ -95,17 +82,13 @@ function Interface(props) {
                         overflow: "auto",
                         order: 1,
                     }}>
-                        <ClaimAnnotation 
+                        <ClaimAnnotation
                             theme={theme}
                             payload={payload}
                             relevance={relevance[currentIndex]}
                             setRelevance={setIndexFactory(setRelevance, relevance, currentIndex)}
                             feasibility={feasibility}
                             setFeasibility={setFeasibility}
-                            wrongDecontextualized={wrongDecontextualized[currentIndex]}
-                            setWrongDecontextualized={setIndexFactory(setWrongDecontextualized, wrongDecontextualized, currentIndex)}
-                            notsure={notsure[currentIndex]}
-                            setNotsure={setIndexFactory(setNotsure, notsure, currentIndex)}
                             paperIndex={currentIndex}
                             setPaperIndex={setCurrentIndex}
                         />
@@ -187,7 +170,7 @@ function Interface(props) {
                                 sx={{
                                     width: "80%",
                                     '& .MuiSlider-markLabel': {
-                                    fontSize: "15px",
+                                        fontSize: "15px",
                                     },
                                 }}
                             />
@@ -198,15 +181,24 @@ function Interface(props) {
                                 control={
                                     <Checkbox checked={cantAssessClaim}
                                         onChange={(e) => setcantAssessClaim(e.target.checked)}
-                                        />
+                                    />
                                 }
                             />
                         </Box>
                     </Box>
                 </EmphCard>
-                <TextField id="missing-info" name="missingInfo" variant="outlined" helperText="Use a bulletted ('-') list to describe any info essential for assessing the claim that is missing from the papers" placeholder="- item 1&#13;&#10;- item 2&#13;&#10;- ..." fullWidth multiline minRows={3}/>
-           </Grid>
-       </Grid>
+                <TextField
+                    id="missing-info"
+                    name="missingInfo"
+                    variant="outlined"
+                    helperText="Use a bulletted ('-') list to describe any info essential for assessing the claim that is missing from the papers"
+                    placeholder="- item 1&#13;&#10;- item 2&#13;&#10;- ..."
+                    fullWidth
+                    multiline
+                    minRows={3}
+                />
+            </Grid>
+        </Grid>
     );
 
 }

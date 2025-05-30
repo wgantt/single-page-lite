@@ -1,7 +1,6 @@
-import { useState, useEffect } from 'react';
-import { Tooltip, Box, Stack, Switch } from '@mui/material';
-import { styled, Chip, Checkbox, Divider, FormControlLabel, Typography } from '@mui/material';
-import Contrasting from './Contrasting';
+import { useState } from 'react';
+import { Box, Stack, Switch } from '@mui/material';
+import { Chip, Divider, FormControlLabel, Typography } from '@mui/material';
 import { EmphCard, NormalCard } from '../components/Card';
 import { LabeledSlider } from '../components/Slider';
 import { animated, useSpring } from '@react-spring/web';
@@ -13,12 +12,8 @@ function ClaimAnnotation(props) {
         payload,
         relevance,
         setRelevance,
-        wrongDecontextualized,
-        setWrongDecontextualized,
         paperIndex,
         setPaperIndex,
-        notsure,
-        setNotsure,
     } = props;
 
     // We'll only do the first, so that with the new
@@ -55,33 +50,33 @@ function ClaimAnnotation(props) {
                             {payload["claim"]}
                         </Typography>
                     </Box>
-               </Box>
+                </Box>
             </NormalCard>
             <EmphCard sx={{
                 margin: "20px"
             }}>
-                   <Box>
-                        <Typography variant='prompt' component="span">
-                            How <b>relevant</b> is the paper to assessing the feasibility of the claim?
-                        </Typography>
-                    </Box>
-                    <Box sx={{
-                        textAlign: "center",
-                        alignItems: "center"
-                    }}>
-                        <LabeledSlider
-                            setter={setRelevance}
-                            value={relevance}
-                            valueLabelFormat={relFormat}
-                            scale={(v) => v}
-                            sx={{
-                                width: "80%",
-                                '& .MuiSlider-markLabel': {
+                <Box>
+                    <Typography variant='prompt' component="span">
+                        How <b>relevant</b> is the paper to assessing the feasibility of the claim?
+                    </Typography>
+                </Box>
+                <Box sx={{
+                    textAlign: "center",
+                    alignItems: "center"
+                }}>
+                    <LabeledSlider
+                        setter={setRelevance}
+                        value={relevance}
+                        valueLabelFormat={relFormat}
+                        scale={(v) => v}
+                        sx={{
+                            width: "80%",
+                            '& .MuiSlider-markLabel': {
                                 fontSize: "15px",
-                                },
-                            }}
-                        />
-                    </Box>
+                            },
+                        }}
+                    />
+                </Box>
             </EmphCard>
             <NormalCard sx={{
                 margin: "20px"
@@ -111,7 +106,7 @@ function ClaimAnnotation(props) {
                         />
                     </Box>
                 </Box>
-             <Box sx={{
+                <Box sx={{
                 }}>
                     <Typography variant='highlightPrompt' component="span">
                         Title:&nbsp;
@@ -119,20 +114,20 @@ function ClaimAnnotation(props) {
                     <Typography variant='prompt' component="span">
                         <a href={payload['paper-links'][paperIndex]} target="_blank">{payload['paper-titles'][paperIndex]}</a>
                     </Typography>
-                        <Box>
-                            <Typography variant='highlightPrompt' component='span'>
-                                Abstract:&nbsp;
-                            </Typography>
-                            <Typography variant='prompt' component="span">
-                                {payload["paper-abstracts"][paperIndex]}
-                            </Typography>
-                        </Box>
+                    <Box>
+                        <Typography variant='highlightPrompt' component='span'>
+                            Abstract:&nbsp;
+                        </Typography>
+                        <Typography variant='prompt' component="span">
+                            {payload["paper-abstracts"][paperIndex]}
+                        </Typography>
+                    </Box>
                 </Box>
                 <Divider sx={{
                     margin: "10px",
                     display: metadataDisplay ? "block" : "none",
-                }}/>
-                 <animated.div style={{
+                }} />
+                <animated.div style={{
                     backgroundColor: theme.palette['card-bg-emph'].main,
                     borderRadius: "10px",
                     paddingLeft: "20px",
@@ -141,14 +136,14 @@ function ClaimAnnotation(props) {
                     ...displayMetaSpring
                 }}>
                     <Stack direction="column" spacing={1}>
-                       <Box>
+                        <Box>
                             <Typography variant='highlightPrompt' component="span">
                                 Introduction:&nbsp;
                             </Typography>
                             <Typography variant='prompt' component="span">
                                 {payload["paper-intro-texts"][paperIndex]}
                             </Typography>
-                       </Box>
+                        </Box>
                     </Stack>
                 </animated.div>
             </NormalCard>
