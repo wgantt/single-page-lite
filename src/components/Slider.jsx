@@ -157,16 +157,20 @@ const markers = [
   },
   {
     value: 1,
-    label: <div className={"TopLabel"}>Somewhat Relevant</div>,
+    label: <div className={"TopLabel"}>A Little Relevant</div>,
   },
   {
     value: 2,
-    label: <div className={"BottomLabel"}>Relevant</div>,
+    label: <div className={"BottomLabel"}>Somehow Relevant</div>,
   },
   {
     value: 3,
-    label: <div className={"TopLabel"}>Highly Relevant</div>,
+    label: <div className={"TopLabel"}>Relevant</div>,
   },
+  {
+    value: 4,
+    label: <div className={"BottomLabel"}>Highly Relevant</div>
+  }
 ];
 
 
@@ -178,8 +182,8 @@ export function LabeledSlider({
   valueLabelFormat = relevanceFormat,
   defaultValue = 0,
   disabled = false,
-  min = 0,
-  max = 3,
+  min = 1,
+  max = 5,
   step = 1,
   marks = markers,
   slots = {markLabel: MarkLabelComponent, mark: MySliderMark},

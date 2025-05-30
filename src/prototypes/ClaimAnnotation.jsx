@@ -86,7 +86,6 @@ function ClaimAnnotation(props) {
                             value={relevance}
                             valueLabelFormat={evFormat}
                             scale={(v) => v}
-                            marks={evidential_markers}
                             sx={{
                                 width: "80%",
                                 '& .MuiSlider-markLabel': {

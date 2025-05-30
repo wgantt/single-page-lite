@@ -62,13 +62,13 @@ const App = () => {
     //     "claim-id": "unique-claim-id",
     //     "claim": "A bold scientific claim!",
     //     "paper-titles": ["First Paper", "Second Paper", "Third Paper"],
-    //     "paper-links": ["link1", "link2", "link3"],
+    //     "paper-links": ["https://www.nytimes.com", "https://www.cnn.com", "https://www.bbc.com"],
     //     "paper-abstracts": [
-    //         "Abstract 1",
-    //         "Abstract 2",
-    //         "Abstract 3"
+    //         "Abstract for First Paper",
+    //         "Abstract for Second Paper",
+    //         "Abstract for Third Paper"
     //     ],
-    //     "paper-intro-texts": ["Introduction section for paper 1", "Introduction section for paper 2", "Introduction section for paper 3"],
+    //     "paper-intro-texts": ["Introduction section for First Paper", "Introduction section for Second Paper", "Introduction section for Third Paper"],
     //     "source-text": ["Search\nImages\nMaps\nPlay\nYouTube\nNews\nGmail\nDrive\nMore\n\u00bb\nSign in\nBooks\nTry the new Google Books\nCheck out the new look and enjoy easier access to your favorite features\nTry it now\nNo thanks\nTry the new Google Books\nTry the new Google Books\nMy library\nHelp\nAdvanced Book Search\nBuy eBook - $14.74\nGet this book in print\nAmazon.com\nBarnes&Noble.com\nBooks-A-Million\nIndieBound\nFind in a library\nAll sellers\n\u00bb\nThe Vanished Imam: Musa al Sadr and the Shia of Lebanon\nBy Fouad Ajami\nAbout this book\nTerms of Service\nPages displayed by permission of\nCornell University Press\n.", "Copyright\n.", "Pages\nRestricted Page\nYou have reached your viewing limit for this book (\nwhy?", ")."],
     // };
 
