@@ -13,8 +13,8 @@ function ClaimAnnotation(props) {
         payload,
         relevance,
         setRelevance,
-        sourceNotMakeSense,
-        setSourceNotMakeSense,
+        cantAssessClaim,
+        setcantAssessClaim,
         wrongDecontextualized,
         setWrongDecontextualized,
         paperIndex,
@@ -138,31 +138,16 @@ function ClaimAnnotation(props) {
                         />
                     </Box>
                 </Box>
-                {/* <Box sx={{
+                <Box sx={{
                 }}>
-                    <FormControlLabel label={"Bad Source"}
+                    <FormControlLabel label={"I can't assess this claim"}
                         control={
-                            <Checkbox checked={sourceNotMakeSense}
-                                onChange={(e) => setSourceNotMakeSense(e.target.checked)}
+                            <Checkbox checked={cantAssessClaim}
+                                onChange={(e) => setcantAssessClaim(e.target.checked)}
                                 />
                         }
                     />
-                    <FormControlLabel label={"Bad Decontextualization"}
-                        control={
-                            <Checkbox checked={wrongDecontextualized}
-                                onChange={(e) => setWrongDecontextualized(e.target.checked)}
-                            />
-                        }
-                    />
-                    <FormControlLabel label={"I'm Uncertain"}
-                        control={
-                            <Checkbox checked={notsure}
-                                onChange={(e) => setNotsure(e.target.checked)}
-                            />
-                        }
-                    />
-
-                </Box> */}
+                </Box>
               <Box sx={{
                 }}>
                     <Typography variant='highlightPrompt' component="span">

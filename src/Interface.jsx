@@ -19,7 +19,7 @@ function Interface(props) {
         payload,
     } = props;
 
-    const [sourceNotMakeSense, setSourceNotMakeSense] = useState(false);
+    const [cantAssessClaim, setcantAssessClaim] = useState(false);
     // const [sentSelectIndices, setSentSelectIndices] = useState(
     //     new Array(payload['paper-titles'].length).fill(null).map(
     //         () => new Array(payload['source-text'].length).fill(false)
@@ -68,7 +68,7 @@ function Interface(props) {
                     theme={theme}
                 />
                 <input type="hidden" name="sentSelectIndices" value={JSON.stringify(sentSelectIndices)} />
-                <input type="hidden" name="sourceNotMakeSense" value={sourceNotMakeSense} />
+                <input type="hidden" name="cantAssessClaim" value={cantAssessClaim} />
                 <input type="hidden" name="wrongDecontextualized" value={wrongDecontextualized} />
                 <input type='hidden' name='notsure' value={notsure} />
             </Grid> */}
@@ -83,6 +83,7 @@ function Interface(props) {
             </Grid>
             <Grid item xs={8}>
                 <input type='hidden' name='relevance' value={relevance} />
+                <input type='hidden' name='cantAssessClaim' value={cantAssessClaim} />
                 <Box sx={{
                     display: "flex",
                     flexDirection: "row",
@@ -98,8 +99,8 @@ function Interface(props) {
                             payload={payload}
                             relevance={relevance[currentIndex]}
                             setRelevance={setIndexFactory(setRelevance, relevance, currentIndex)}
-                            sourceNotMakeSense={sourceNotMakeSense}
-                            setSourceNotMakeSense={setSourceNotMakeSense}
+                            cantAssessClaim={cantAssessClaim}
+                            setcantAssessClaim={setcantAssessClaim}
                             wrongDecontextualized={wrongDecontextualized[currentIndex]}
                             setWrongDecontextualized={setIndexFactory(setWrongDecontextualized, wrongDecontextualized, currentIndex)}
                             notsure={notsure[currentIndex]}
@@ -161,7 +162,7 @@ function Interface(props) {
                 </Box>
             </Grid>
             <Grid item xs={2}>
-                <TextField id="missing-info" name="missing info" variant="outlined" helperText="Use a bulletted ('-') list to describe any info essential for assessing the claim that is missing from the papers" placeholder="- item 1&#13;&#10;- item 2&#13;&#10;- ..." fullWidth multiline minRows={3}/>
+                <TextField id="missing-info" name="missingInfo" variant="outlined" helperText="Use a bulletted ('-') list to describe any info essential for assessing the claim that is missing from the papers" placeholder="- item 1&#13;&#10;- item 2&#13;&#10;- ..." fullWidth multiline minRows={3}/>
            </Grid>
        </Grid>
     );
